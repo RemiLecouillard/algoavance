@@ -19,4 +19,10 @@ NOEUD *insere(NOEUD *p, element x);
 
 void affiche_arbre(NOEUD *p, int col);
 
+int nbFeuilles(NOEUD *p);
+
+int nbNoeudLargeur(NOEUD *p);
+
+void destroyABR(NOEUD* abr);
+
 #endif

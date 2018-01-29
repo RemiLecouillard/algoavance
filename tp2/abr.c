@@ -1,8 +1,10 @@
 #include "abr.h"
-
+#include "fifo.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#define estFeuille(p) p->gauche == NULL && p->droit == NULL
 
 
 NOEUD *arbre_vide() {
@@ -33,4 +35,42 @@ void affiche_arbre(NOEUD *p, int col) {
      printf("%d\n",p->valeur);
      affiche_arbre(p->gauche,col+1);
     }
+}
+
+int nbFeuilles(NOEUD *p) {
+  if (p->gauche == NULL && p->droit == NULL) {
+    return 1;
+  } else {
+    return ( p->gauche ? nbFeuilles(p->gauche) : 0 ) +
+      ( p->droit ? nbFeuilles(p->droit) : 0 );
+  }
+}
+
+int nbNoeudLargeur(NOEUD *p) {
+  fifo* queue;
+  int nb;
+
+  queue = createFifo();
+  enqueue(queue, p);
+  nb = 0;
+
+  while (!isEmpty(queue)) {
+    dequeue(queue, &p);
+    nb++;
+    if (p->gauche) {
+      enqueue(queue, p->gauche);
+    }
+    if (p->droit) {
+      enqueue(queue, p->droit);
+    }
+  }
+  return nb;
+}
+
+void destroyABR(NOEUD* abr) {
+  if (abr) {
+    destroyABR(abr->gauche);
+    destroyABR(abr->droit);
+    free(abr);
+  }
 }
