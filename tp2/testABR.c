@@ -57,12 +57,73 @@ MU_TEST(test_display) {
   mu_assert_int_eq(7, result);
 }
 
+MU_TEST(test_deuxFiles) {
+  int i;
+  NOEUD* abr = NULL;
+  NOEUD* res = NULL;
+  fifo *prefix, *sufix;
+
+  prefix = createFifo();
+  sufix = createFifo();
+  abr = insere(abr, 11);
+  for (i = 0; i < 10; i ++) {
+    insere(abr, i);
+  }
+  deuxFiles(abr, prefix, sufix);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(11, res->valeur);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(0, res->valeur);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(1, res->valeur);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(2, res->valeur);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(3, res->valeur);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(4, res->valeur);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(5, res->valeur);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(6, res->valeur);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(7, res->valeur);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(8, res->valeur);
+  dequeue(prefix, &res);
+  mu_assert_int_eq(9, res->valeur);
+
+  dequeue(sufix, &res);
+  mu_assert_int_eq(9, res->valeur);
+  dequeue(sufix, &res);
+  mu_assert_int_eq(8, res->valeur);
+  dequeue(sufix, &res);
+  mu_assert_int_eq(7, res->valeur);
+  dequeue(sufix, &res);
+  mu_assert_int_eq(6, res->valeur);
+  dequeue(sufix, &res);
+  mu_assert_int_eq(5, res->valeur);
+  dequeue(sufix, &res);
+  mu_assert_int_eq(4, res->valeur);
+  dequeue(sufix, &res);
+  mu_assert_int_eq(3, res->valeur);
+  dequeue(sufix, &res);
+  mu_assert_int_eq(2, res->valeur);
+  dequeue(sufix, &res);
+  mu_assert_int_eq(1, res->valeur);
+  dequeue(sufix, &res);
+  mu_assert_int_eq(0, res->valeur);
+  dequeue(sufix, &res);
+  mu_assert_int_eq(11, res->valeur);
+}
+
 MU_TEST_SUITE(test_suite) {
   MU_SUITE_CONFIGURE(&test_setup, &test_teardown);
 
   MU_RUN_TEST(test_nbFeuilles);
   MU_RUN_TEST(test_noeudsLargeur);
   MU_RUN_TEST(test_display);
+  MU_RUN_TEST(test_deuxFiles);
 }
 
 int main(void) {

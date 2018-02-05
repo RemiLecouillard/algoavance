@@ -97,6 +97,21 @@ int display(NOEUD* abr) {
 
 }
 
+void deuxFiles(NOEUD *p,fifo* prefix,fifo* sufix) {
+
+  enqueue(prefix, p);
+  if (p->gauche) {
+    deuxFiles(p->gauche, prefix, sufix);
+  }
+
+  if (p->droit) {
+    deuxFiles(p->droit, prefix, sufix);
+  }
+
+  enqueue(sufix, p);
+
+}
+
 void destroyABR(NOEUD* abr) {
   if (abr) {
     destroyABR(abr->gauche);

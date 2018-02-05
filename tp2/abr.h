@@ -26,6 +26,8 @@ void getFeuilles(NOEUD *p,fifo* file);
 
 int display(NOEUD* abr);
 
+void deuxFiles(NOEUD *p,fifo* prefix,fifo* sufix);
+
 void destroyABR(NOEUD* abr);
 
 #endif
