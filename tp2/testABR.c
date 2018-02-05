@@ -20,6 +20,8 @@ MU_TEST(test_nbFeuilles) {
   mu_assert_int_eq(2, nbFeuilles(abr));
   insere(abr, 12);
   insere(abr, 34);
+  printf("\n");
+  affiche_arbre(abr, 2, '>');
   mu_assert_int_eq(3, nbFeuilles(abr));
   destroyABR(abr);
   abr = NULL;

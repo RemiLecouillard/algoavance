@@ -17,7 +17,7 @@ NOEUD *arbre_vide();
 
 NOEUD *insere(NOEUD *p, element x);
 
-void affiche_arbre(NOEUD *p, int col);
+void affiche_arbre(NOEUD *p, int col, char truc);
 
 int nbFeuilles(NOEUD *p);
 

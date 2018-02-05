@@ -27,14 +27,14 @@ NOEUD *insere(NOEUD *p, element x) {
   return(p);
 }
 
-void affiche_arbre(NOEUD *p, int col) {
+void affiche_arbre(NOEUD *p, int col,char truc) {
   int i;
   if (p)
-    {affiche_arbre(p->droit,col+1);
+    {affiche_arbre(p->droit,col+1, '/');
      for (i=0;i<col;i++) printf("   ");
-     printf("%d\n",p->valeur);
-     affiche_arbre(p->gauche,col+1);
-    }
+     printf("%c%d\n", truc, p->valeur);
+     affiche_arbre(p->gauche,col+1, '\\');
+   }
 }
 
 int nbFeuilles(NOEUD *p) {
