@@ -38,7 +38,7 @@ void affiche_arbre(NOEUD *p, int col,char truc) {
 }
 
 int nbFeuilles(NOEUD *p) {
-  if (p->gauche == NULL && p->droit == NULL) {
+  if (estFeuille(p)) {
     return 1;
   } else {
     return ( p->gauche ? nbFeuilles(p->gauche) : 0 ) +
@@ -68,7 +68,7 @@ int nbNoeudLargeur(NOEUD *p) {
 }
 
 void getFeuilles(NOEUD *p,fifo* file) {
-  if (p->gauche == NULL && p->droit == NULL) {
+  if (estFeuille(p)) {
     enqueue(file, p);
   } else {
     if (p->gauche) {
