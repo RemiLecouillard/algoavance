@@ -67,6 +67,36 @@ int nbNoeudLargeur(NOEUD *p) {
   return nb;
 }
 
+void getFeuilles(NOEUD *p,fifo* file) {
+  if (p->gauche == NULL && p->droit == NULL) {
+    enqueue(file, p);
+  } else {
+    if (p->gauche) {
+      getFeuilles(p->gauche, file);
+    }
+    if (p->droit) {
+      getFeuilles(p->droit, file);
+    }
+  }
+}
+
+
+int display(NOEUD* abr) {
+   int res;
+
+   if ( !abr) {
+      return 0;
+   }
+   printf("%d\t", abr->valeur);
+
+   res = display( abr->gauche) + display( abr->droit) ;
+
+    printf("%d\t", abr->valeur);
+
+   return ++res;
+
+}
+
 void destroyABR(NOEUD* abr) {
   if (abr) {
     destroyABR(abr->gauche);

@@ -1,11 +1,11 @@
 #ifndef _FIFO_H
 #define  _FIFO_H
 
-#include "abr.h"
-
 typedef struct fifo fifo;
 
 typedef struct node node;
+
+#include "abr.h"
 
 typedef NOEUD* elem;
 

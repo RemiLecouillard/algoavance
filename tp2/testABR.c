@@ -41,11 +41,28 @@ MU_TEST(test_noeudsLargeur) {
   abr = NULL;
 }
 
+MU_TEST(test_display) {
+  NOEUD* abr;
+  int i;
+  int result;
+
+  abr=NULL;
+  abr = insere(abr, 1 );
+  for ( i=2; i<=10; i++) {
+    insere(abr, (i*5)%7 );
+  }
+  result = display( abr);
+
+  printf("\n");
+  mu_assert_int_eq(7, result);
+}
+
 MU_TEST_SUITE(test_suite) {
   MU_SUITE_CONFIGURE(&test_setup, &test_teardown);
 
   MU_RUN_TEST(test_nbFeuilles);
   MU_RUN_TEST(test_noeudsLargeur);
+  MU_RUN_TEST(test_display);
 }
 
 int main(void) {

@@ -1,17 +1,16 @@
 #ifndef _ABR_H
 #define  _ABR_H
 
-
-#include <stdio.h>
-#include <stdlib.h>
-
 typedef int element;
 
-typedef struct noeud {
+typedef struct noeud NOEUD, *ABR;
+
+#include "fifo.h"
+
+struct noeud {
 	element valeur;
 	struct noeud *gauche, *droit;
-} NOEUD, *ABR;
-
+};
 
 NOEUD *arbre_vide();
 
@@ -22,6 +21,10 @@ void affiche_arbre(NOEUD *p, int col, char truc);
 int nbFeuilles(NOEUD *p);
 
 int nbNoeudLargeur(NOEUD *p);
+
+void getFeuilles(NOEUD *p,fifo* file);
+
+int display(NOEUD* abr);
 
 void destroyABR(NOEUD* abr);
 
