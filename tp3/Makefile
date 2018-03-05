@@ -6,9 +6,9 @@ OBJ = $(SRC:%.c=%.o)
 
 .PHONY: clean all distclean
 
-all: testABR.out
+all: testDico.out
 
-testABR.out: $(OBJ)
+testDico.out: $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 .o: .c

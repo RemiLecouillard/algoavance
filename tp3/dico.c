@@ -2,14 +2,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-NTree* createNTree() {
-  NTree* tree = malloc(sizeof(NTree));
-  tree->letter = 2;
-  tree->brother = NULL;
-  tree->son = NULL;
-  return tree;
-}
-
 int search(NTree* tree,char* word) {
   if(tree->letter == 2){
     if (hasSon(tree)) {
@@ -48,44 +40,6 @@ void addBrother(NTree* tree,char letter) {
   new->brother = tree->brother;
   tree->brother = new;
 }
-/*
-NTree* getLetterInSons(NTree* tree,char letter) {
-  NTree* current;
-  NTree* new;
-  if (hasSon(tree)) {
-    current = tree->son;
-    while(current->letter != letter){
-      if (!hasBrother(current)) {
-        addBrother(current, letter);
-      } else if(current->brother->letter > letter){
-        addBrother(current, letter);
-      }
-      current = current->brother;
-    }
-  } else {
-    new = malloc(sizeof(NTree));
-    new->letter = letter;
-    new->son = NULL;
-    new->brother = NULL;
-    tree->son = new;
-    current = new;
-  }
-  return current;
-}
-
-
-void add(NTree* tree,char* word) {
-  NTree* node;
-  int i;
-
-  i = -1;
-  node = tree;
-
-  do {
-    i++;
-    node = getLetterInSons(node, word[i]);
-  } while(word[i] != '\0');
-}*/
 
 NTree* add(NTree* tree,char* word) {
   NTree* current;
@@ -164,5 +118,63 @@ void display(NTree* tree,char buf[],int index){
     }
     display(tree->son, buf, index + 1);
     display(tree->brother, buf, index);
+  }
+}
+
+void saveRec(NTree* tree,char buf[],int index,FILE* file) {
+  if (tree) {
+    buf[index] = tree->letter;
+    if (buf[index] == '\0') {
+      fprintf(file, "%s\n", buf);
+    }
+    saveRec(tree->son, buf, index + 1, file);
+    saveRec(tree->brother, buf, index, file);
+  }
+}
+
+void save(NTree* tree,char* fileName) {
+  FILE* file;
+  char buf[30];
+
+  file = fopen(fileName, "w+");
+
+  if (file) {
+    saveRec(tree, buf, 0, file);
+    fclose(file);
+  } else {
+    printf("Impossible d'ouvrir le fichier %s\n", fileName);
+  }
+}
+
+NTree* getLetterInBrother(NTree* tree,char letter) {
+  if (tree) {
+    if (tree->letter == letter) {
+      return tree;
+    } else {
+      return getLetterInBrother(tree->brother, letter);
+    }
+  } else {
+    return NULL;
+  }
+}
+
+int nbWords(NTree* tree) {
+  if (tree) {
+    if (tree->letter == '\0') {
+      return 1 + nbWords(tree->brother);
+    }
+    return nbWords(tree->son) + nbWords(tree->brother);
+  } else {
+    return 0;
+  }
+}
+
+int nbWordsBeginsBy(NTree* tree,char letter) {
+  tree = getLetterInBrother(tree, letter);
+
+  if (tree) {
+    return nbWords(tree->son);
+  } else {
+    return 0;
   }
 }
